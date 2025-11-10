@@ -1,17 +1,22 @@
+### This module searches for the best compound combinations of acceptable Non-Heads.
+# Conditions imposed in the choice: 
+# 1 - goose, ox, louse, mouse, foot, tooth, child, women and men, have to be used. 
+# 2 - Primary criteria of choice: minimizing the highest Cohen's D (between regular and irregular pairs), for the 3 datasets. 
+# 3 - Secondary criteria of choice: minimazing the maximum gap in the mean between the 4 gropus of noouns.
+# 4 - Tertiary criteria of choice: Minimizing the total of the gaps in the 4 groups.       
+
 import itertools
 import zipf_stats
-import pandas as pd  # <-- This import is needed by your zipf_stats module
 
 num_answers = 10
 num_stimuli = 14
 
 # ---- helpers ----
-GROUP_KEYS = ("irr_sg", "irr_pl", "reg_sg", "reg_pl")  # requested order
+GROUP_KEYS = ("irr_sg", "irr_pl", "reg_sg", "reg_pl")
 
 # We must initialize the class to use its method
 stats_calculator = zipf_stats.Zipf_stats()
 
-#-----------------------------------------------------------------
 
 def pack(irr_sg, irr_pl, reg_sg, reg_pl):
     # each: (word, SUBTLEX, B10, B100)

@@ -1,5 +1,4 @@
 # This class calculates statistics: mean, standard deviation and cohen's d.
-### To save
 
 import pandas as pd
 
@@ -84,36 +83,30 @@ class Zipf_stats:
     
 
 
-    def cohens_d_from_lists(self, list1, list2):
+    def cohens_d_from_lists(self, list1, list2): # It uses the formula: Mdiff/SDdiff
     
         if len(list1) != len(list2):
             raise ValueError("Lists must be of equal length for paired calculation.")
         if len(list1) < 2:
             return 0.0  # Cannot calculate stdev with one item
 
-        try:
-            # 1. Convert the Python lists to pandas Series
-            pd_list1 = pd.Series(list1)
-            pd_list2 = pd.Series(list2)
+        # Convert the Python lists to pandas Series
+        pd_list1 = pd.Series(list1)
+        pd_list2 = pd.Series(list2)
 
-            # 2. Calculate the list of differences (now a pandas Series)
-            diffs = pd_list1 - pd_list2
+        # Calculate the list of differences.
+        diffs = pd_list1 - pd_list2
 
-            # 3. Calculate the mean of the differences (using pandas .mean())
-            mean_diff = diffs.mean()
+        # Calculate the mean of the differences.
+        mean_diff = diffs.mean()
 
-            # 4. Calculate the standard deviation of the differences (using pandas .std())
-            sd_diff = diffs.std()
+        # Calculate the standard deviation of the differences.
+        sd_diff = diffs.std()
 
-            if pd.isna(sd_diff) or sd_diff == 0:
-                return 0.0  # No variation
-
-            # 5. Return the result, rounded to 3 decimal places
-            return round(mean_diff / sd_diff, 3)
-
-        except Exception as e:
-            print(f"Error in cohens_d_from_lists: {e}")
+        if pd.isna(sd_diff) or sd_diff == 0:
             return 0.0
+
+        return round(mean_diff / sd_diff, 3)
 
 
           

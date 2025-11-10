@@ -42,7 +42,7 @@ class Zipf_calculator_subtlex:
         
         for word in words:
             value = self.get_zipf_subtlex_word(word)
-            results[word] = value #added new part to guarantee aa return that is not None. Under test.  
+            results[word] = value #added new part to guarantee a return that is not None. Under test.  
         
         return results
 
