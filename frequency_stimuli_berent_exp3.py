@@ -4,17 +4,14 @@
 import os
 import re
 from collections import Counter
-import inflect  # <-- Make sure to 'pip install inflect'
+import inflect 
 
-# --- Configuration ---
 
-# List of all corpus files you want to check
 CORPUS_FILENAMES = [
     "concatenated_train_10M.csv",
     "concatenated_train_100M.csv"
 ]
 
-# --- End Configuration ---
 
 def get_all_phrases():
     """
@@ -24,11 +21,8 @@ def get_all_phrases():
     2. All variations for PLURAL heads.
     """
     
-    # 1. Initialize the inflect engine
-    p = inflect.engine()
+    p = inflect.engine()  # to transform plurals into singulars and vice versa
 
-    # 2. Your list of groups and heads
-    # --- THIS IS THE ONLY PART THAT HAS BEEN CHANGED ---
     compound_definitions = [
         (['hose', 'hoses', 'hoe', 'hoes'], 'collector'),
         (['rose', 'roses', 'row', 'rows'], 'organizer'),
@@ -51,44 +45,37 @@ def get_all_phrases():
         (['phase', 'phases', 'fee', 'fees'], 'fanatic'),
         (['fax', 'faxes', 'shack', 'shacks'], 'man')
     ]
-    # --------------------------------------------------
     
-    # We now create two separate lists
     singular_phrases = []
     plural_phrases = []
     
-    # 3. Modified loop to sort phrases into the two lists
     for group, head in compound_definitions:
         
         singular_head = p.singular_noun(head) or head
         plural_head = p.plural(singular_head)
         
         for subject in group:
-            # Add all SINGULAR head variations
+
             singular_phrases.append(f"{subject} {singular_head}")
             singular_phrases.append(f"{subject}-{singular_head}")
             singular_phrases.append(f"{subject}{singular_head}")
             
-            # Add PLURAL head variations (if plural is different)
             if singular_head != plural_head:
                 plural_phrases.append(f"{subject} {plural_head}")
                 plural_phrases.append(f"{subject}-{plural_head}")
                 plural_phrases.append(f"{subject}{plural_head}")
             
-    # Return two distinct lists
     return singular_phrases, plural_phrases
 
 def main():
     """Main function to run the count for all specified files."""
     
-    # 1. Get the list of all phrase variations
-    # MODIFIED: Now gets two separate lists
+    # Get the list of all phrase variations
     singular_phrases, plural_phrases = get_all_phrases()
     # We combine them here ONLY for building the regex
     all_phrases = singular_phrases + plural_phrases
     
-    # 2. Build ONE combined regex pattern
-    # This logic remains IDENTICAL.
+    # Build ONE combined regex pattern
     pattern_core = "|".join(re.escape(p) for p in all_phrases)
     combined_pattern = re.compile(r'\b(' + pattern_core + r')\b')
     
@@ -96,7 +83,7 @@ def main():
     print(f"(Searching for {len(all_phrases)} total variations)")
 
 
-    # 3. Loop through each file
+    # Loop through each file
     for filename in CORPUS_FILENAMES:
         
         print("\n" + "="*60)
@@ -114,25 +101,22 @@ def main():
                 
             print(f"Corpus loaded. Searching...")
 
-            # 4. Run the SINGLE regex search
-            # This logic remains IDENTICAL.
+            # Run the SINGLE regex search
             all_matches = combined_pattern.findall(corpus_text)
 
-            # 5. Count the frequencies of the results
+            # Count the frequencies of the results
             if not all_matches:
                 print("No items were found.")
                 print(f"\n--- END OF REPORT FOR: {filename} ---")
                 continue
 
-            # This logic remains IDENTICAL.
             frequency_counts = Counter(all_matches)
 
-            # 6. Print the results
-            # MODIFIED: Prints results in two separate, grouped sections
+            # Print the results
             
             print("Found items:")
             
-            # --- Print Singulars ---
+            # Print Singulars
             print("\n--- Singular Head Forms ---")
             found_in_singular = False
             for phrase in singular_phrases:
@@ -143,7 +127,7 @@ def main():
             if not found_in_singular:
                 print("No items found for this group.")
         
-            # --- Print Plurals ---
+            # Print Plurals
             print("\n--- Plural Head Forms ---")
             found_in_plural = False
             for phrase in plural_phrases:

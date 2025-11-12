@@ -14,15 +14,9 @@ a = Zipf_calculator()
 
 subtlex_results = a.zipf_subtlex(words)
 
-print(subtlex_results)
-
 baby10m_results = a.zipf_babyLM_10M(words)
 
-print(baby10m_results)
-
 baby100m_results = a.zipf_babyLM_100M(words)
-
-print(baby100m_results)
 
 
 data = {
