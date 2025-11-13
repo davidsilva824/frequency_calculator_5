@@ -2,7 +2,7 @@ This testing pipeline is part of the masters dissertation: "Exploring Grammatica
 
 It obtains Zipf values
 
-Install all requested packages.
+Install all requested packages. Run the 'zipf_list_of_words.py'
 
 Run 'zipf_list_of_words.py' file to obtain the Zipf values for one or more words.
 
