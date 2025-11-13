@@ -6,8 +6,8 @@ Install all requested packages.
 
 Run 'zipf_list_of_words.py' file to obtain the Zipf values for one or more words.
 
-Run 'zipf_statistics_non_heads.py' files to obtain the mean, standard deviation and Cohen's D for the four groups under study.
+With 'selection_Non_Heads_mean_or_cohen.py' file to obtain the best lists of Non-Head combinations, from the 24 considered packs of 1 irregular pair and 1 semanically similar regular pair. You can select different criteria.
 
-Run the test files to understand how the methods work.
+Run 'frequency_stimuli_3.0' to check for the absolute frequency of a compound in in the BabyLM datasets (10M and 100M).
 
-In order to simplify, the test files have only the tests for the methods used in this repository. For the full tests of the classes, refer to 'frequency_calculator_4' repository. make unittests instead of this. 
+zipf_stats and zipf_calculaor modules are classes with methods. 

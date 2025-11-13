@@ -1,5 +1,8 @@
 ### this module obtains the frequency of compounds (Non-Head + Head) in the datasets of babyLM (10M and 100M).
 
+# It searches for several forms of the compound:
+# e.g. 'rat eater'; 'rats eater"; 
+
 import os
 import re
 from collections import Counter
@@ -12,12 +15,6 @@ CORPUS_FILENAMES = [
 ]
 
 def get_all_phrases():
-    """
-    MODIFIED:
-    Returns TWO separate lists:
-    1. All variations for SINGULAR heads.
-    2. All variations for PLURAL heads.
-    """
     
     p = inflect.engine() # to transform plurals into singulars and vice versa
 

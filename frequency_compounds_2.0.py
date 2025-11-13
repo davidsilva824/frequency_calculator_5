@@ -3,6 +3,27 @@ import re
 from collections import Counter
 import inflect  
 
+# It searches for 16 forms of the compound if it is regular.
+# e.g. rat/rats eater
+
+# rat eater
+# rat-eater
+# rateater
+# rat eaters
+# rat-eaters
+# rateaters
+# rat's eater
+# rat's eaters
+# rats eater
+# rats-eater
+# ratseater
+# rats eaters
+# rats-eaters
+# ratseaters
+# rats' eater
+# rats' eaters
+
+
 
 CORPUS_FILENAMES = [
     "concatenated_train_10M.csv",
@@ -17,7 +38,8 @@ def make_possessive(word):
         return word + "'"
     else:
         return word + "'s"
-# --------------------------------------------------
+    
+    
 
 
 def get_all_phrases():
@@ -26,7 +48,7 @@ def get_all_phrases():
     p = inflect.engine() # to transform plurals into singulars and vice versa
 
     compound_definitions = [
-        (['woman'], ['reproductive']),
+        (['rat', 'rats'], ['eater']),
         # Add your other groups here, e.g.:
         # (['mouse', 'mice', 'rat', 'rats'], ['eater', 'trader']),
     ]

@@ -10,14 +10,14 @@ num_answers = 10 # number of acombinations it should provide.
 
 num_stimuli = 14 # number of stimuli Non_Heads we want to select. 
 
-decision_method = 'sum_cohens_d'
+decision_method = 'max_dif_singular_plural'
 
 # other options
-# 'difference_mean_singular_plural'
-# 'max_mean_dif_all_groups'
-# 'sum_mean_dif_all_groups'
-# 'max_cohens_d' 
-# 'sum_cohens_d'
+#  'max_dif_singular_plural'
+#  'max_group_dif'
+#  'sum_dif_all_groups'
+#  'max_cohens_d'
+#  'sum_cohens_d'
 
 mandatory_irregular_pairs = [
     "goose", "louse", "child", "mouse", "woman", "man", "tooth", "foot", "ox"
@@ -361,7 +361,7 @@ for rec in result_list[:num_answers]:
     # Unpack the 5 scores and the ids
     ids = rec[5] # The 'ids' tuple is the 6th item (index 5)
     
-    # --- Re-calculate stats for printing ---
+    # Re-calculate stats for printing ---
     packs_subset = [packs[i] for i in ids]
     df = build_combo_df(packs_subset)
     means_df = df.groupby('group').mean().reindex(group_keys)

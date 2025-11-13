@@ -4,4 +4,6 @@ concatenated_train_100M.csv
 train_10M/
 train_100M/
 
+zipf_list_of_words_result.csv
+
 __pycache__/
