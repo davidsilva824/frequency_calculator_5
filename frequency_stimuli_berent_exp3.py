@@ -1,29 +1,20 @@
+# Version 3.0
+# It searches for 16 forms of the compound if it is regular. It searches for pssessives 
+
 import os
 import re
 from collections import Counter
-import inflect  
+import inflect 
+from zipf_calculator_babyLM import Zipf_calculator_babyLM
 
-# It searches for 16 forms of the compound if it is regular.
-# e.g. rat/rats eater
+# this part is just to download he BabyLM datasets and create the concatenate_train files.
+#  in case they are not already in the working folder. 
+print("Checking for corpus files...")  
+corpus_setup = Zipf_calculator_babyLM()
+print("Corpus files are ready.")
+#----------------------------------------------
 
-# rat eater
-# rat-eater
-# rateater
-# rat eaters
-# rat-eaters
-# rateaters
-# rat's eater
-# rat's eaters
-# rats eater
-# rats-eater
-# ratseater
-# rats eaters
-# rats-eaters
-# ratseaters
-# rats' eater
-# rats' eaters
-
-### Insert your combinations in compound_definitions.
+### Insert combinations in compound_groups.
 
 CORPUS_FILENAMES = [
     "concatenated_train_10M.csv",
@@ -42,19 +33,35 @@ def get_all_phrases():
     
     p = inflect.engine() # to transform plurals into singulars and vice versa
 
-    compound_definitions = [
-        (['rat', 'rats'], ['eater']),
-        (['that'], ['comp'])
-        # Add your other groups here, e.g.:
-        # (['mouse', 'mice', 'rat', 'rats'], ['eater', 'trader']),
+    compound_groups = [
+        (['hose', 'hoses', 'hoe', 'hoes'], ['collector']),
+        (['rose', 'roses', 'row', 'rows'], ['organizer']),
+        (['rise', 'rises', 'lie', 'lies'], ['addict']),
+        (['clause', 'clauses', 'claw', 'claws'], ['hider']),
+        (['gaze', 'gazes', 'guy', 'guys'], ['attractor']),
+        (['box', 'boxes', 'book', 'books'], ['horde']),
+        (['sex', 'sexes', 'sack', 'sacks'], ['differences']),
+        (['tax', 'taxes', 'tack', 'tacks'], ['refund']),
+        (['size', 'sizes', 'sigh', 'sighs'], ['machine']),
+        (['praise', 'praises', 'tray', 'trays'], ['getter']),
+        (['bruise', 'bruises', 'brew', 'brews'], ['expert']),
+        (['raise', 'raises', 'ray', 'rays'], ['seeker']),
+        (['blaze', 'blazes', 'play', 'plays'], ['lover']),
+        (['vase', 'vases', 'bee', 'bees'], ['keeper']),
+        (['fox', 'foxes', 'shock', 'shocks'], ['avoiders']),
+        (['maze', 'mazes', 'bay', 'bays'], ['expert']),
+        (['breeze', 'breezes', 'tree', 'trees'], ['protector']),
+        (['cause', 'causes', 'paw', 'paws'], ['evaluator']),
+        (['phase', 'phases', 'fee', 'fees'], ['fanatic']),
+        (['fax', 'faxes', 'shack', 'shacks'], ['man'])
     ]
     
     singular_phrases = []
     plural_phrases = []
     possessive_phrases = []
     
-    # 3. Modified loop to sort phrases into the three lists
-    for group, head_list in compound_definitions:
+    # Sorts phrases into the three lists.
+    for group, head_list in compound_groups:
         
         for head in head_list:
             
@@ -73,9 +80,8 @@ def get_all_phrases():
                     plural_phrases.append(f"{subject} {plural_head}")
                     plural_phrases.append(f"{subject}-{plural_head}")
                     plural_phrases.append(f"{subject}{plural_head}")
-                # ---------------------------------
 
-                # Add POSSESSIVE variations ---
+                # Add POSSESSIVE variations
                 poss_subject = make_possessive(subject)
                 
                 # e.g., "rat's eater" or "rats' eater"
@@ -144,6 +150,7 @@ for filename in CORPUS_FILENAMES:
             if count > 0:
                 print(f"{phrase}: {count}")
                 found_in_singular = True
+
         if not found_in_singular:
             print("No items found for this group.")
     
@@ -155,6 +162,7 @@ for filename in CORPUS_FILENAMES:
             if count > 0:
                 print(f"{phrase}: {count}")
                 found_in_plural = True
+
         if not found_in_plural:
             print("No items found for this group.")
 
@@ -166,6 +174,7 @@ for filename in CORPUS_FILENAMES:
             if count > 0:
                 print(f"{phrase}: {count}")
                 found_in_possessive = True
+                
         if not found_in_possessive:
             print("No items found for this group.")
 

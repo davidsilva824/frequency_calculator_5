@@ -5,33 +5,19 @@ import itertools
 import pandas as pd 
 from zipf_stats import Zipf_stats
 
-print()
 
-num_answers = 20 # number of combinations it should provide.
+num_answers = 10 # number of combinations it should provide.
+
 num_stimuli = 14 # number of stimuli Non_Heads we want to select. 
 
-# Full decision order (from highest priority to lowest).
-# You can reorder or remove/add items here to change tie-breaking logic.
-decision_order = [
-    'max_cohens_d_babylm',
-    'max_dif_singular_plural_babylm',
-    'max_group_dif_babylm',
-    'max_cohens_d',
-    'max_dif_singular_plural',          
-    'max_group_dif',
-    'sum_cohens_d',
-    'sum_dif_all_groups',
-]
+decision_method = 'max_dif_singular_plural'
 
-# other options (for decision_method, if you still want to use a single main label)
+# other options
 #  'max_dif_singular_plural'
 #  'max_group_dif'
 #  'sum_dif_all_groups'
 #  'max_cohens_d'
 #  'sum_cohens_d'
-#  'max_dif_singular_plural_babylm'
-#  'max_group_dif_babylm'
-#  'max_cohens_d_babylm'
 
 mandatory_irregular_pairs = [
     "goose", "louse", "child", "mouse", "woman", "man", "tooth", "foot", "ox"
@@ -39,7 +25,7 @@ mandatory_irregular_pairs = [
 
 stats_calculator = Zipf_stats() # calling the class that handles statistics with zipf.
 
-group_keys = ("irr_sg", "irr_pl", "reg_sg", "reg_pl")  # names of the groups and the order in which they appear.
+group_keys = ("irr_sg", "irr_pl", "reg_sg", "reg_pl")  # names of the groups and the order in shich they appear.
                                                        # you can change such order by changing things here. 
 
 def pack(irr_sg, irr_pl, reg_sg, reg_pl): # function that creates a dictionary with the classification 
@@ -165,10 +151,9 @@ def calculate_mean_difs(means_df): # calculates differences between the means
    
     max_group_dif = max(difference_all_groups) # the maximum difference between the 4 conditions in the three datasets, for a combination.
 
-    sum_dif_all_groups = sum(difference_all_groups) # here is the sum of the differences between the 4 groups. 
+    sum_dif_all_groups = sum(difference_all_groups ) # here is the sum of the differences between the 4 groups. 
     
-    # We also return d_irr and d_reg so that we can derive BabyLM-only metrics later.
-    return max_dif_singular_plural, max_group_dif, sum_dif_all_groups, difference_all_groups, d_irr, d_reg
+    return max_dif_singular_plural, max_group_dif, sum_dif_all_groups, difference_all_groups
 
 
 def calculate_cohens_d(df):
@@ -213,9 +198,8 @@ def calculate_cohens_d(df):
 
 def show_combo_stimuli(ids, packs): # prints the regular and irregular pairs of 1 combination. 
 
-    print("Combo IDs:", ids)
+    print("Combo IDs:", ids)    
 
-    print()    
 
     for idx in ids:
         pack = packs[idx]
@@ -227,20 +211,14 @@ def show_combo_stimuli(ids, packs): # prints the regular and irregular pairs of 
         print(f"  {irr_sg}/{irr_pl} — {reg_sg}/{reg_pl}")
 
 
+
+
 def show_combo_stats(gaps, means, cohen_d_vals):
     """Builds and prints a DataFrame of the combo's statistics."""
     
     # Unpack all the data
     cohens_d_irregular, cohens_d_regular = cohen_d_vals
     
-    # --- (NEW) Calculate the requested gaps ---
-    # Gap Irr = abs(Irr-PL - Irr-SG) -> abs(means[1] - means[0])
-    gap_irr = [abs(means[1][i] - means[0][i]) for i in range(3)]
-    
-    # Gap Reg = abs(Reg-PL - Reg-SG) -> abs(means[3] - means[2])
-    gap_reg = [abs(means[3][i] - means[2][i]) for i in range(3)]
-    # ----------------------------------------
-
     # Create the data for the DataFrame
     data = {
         "SUBTLEX": [
@@ -250,9 +228,7 @@ def show_combo_stats(gaps, means, cohen_d_vals):
             means[3][0],  # Mean Reg-PL
             gaps[0],
             cohens_d_irregular[0],
-            cohens_d_regular[0],
-            gap_irr[0],    # <-- (NEW)
-            gap_reg[0]     # <-- (NEW)
+            cohens_d_regular[0]
         ],
         "baby10m": [
             means[0][1],
@@ -261,9 +237,7 @@ def show_combo_stats(gaps, means, cohen_d_vals):
             means[3][1],
             gaps[1],
             cohens_d_irregular[1],
-            cohens_d_regular[1],
-            gap_irr[1],    # <-- (NEW)
-            gap_reg[1]     # <-- (NEW)
+            cohens_d_regular[1]
         ],
         "baby100m": [
             means[0][2],
@@ -272,9 +246,7 @@ def show_combo_stats(gaps, means, cohen_d_vals):
             means[3][2],
             gaps[2],
             cohens_d_irregular[2],
-            cohens_d_regular[2],
-            gap_irr[2],    # <-- (NEW)
-            gap_reg[2]     # <-- (NEW)
+            cohens_d_regular[2]
         ]
     }
     
@@ -286,9 +258,7 @@ def show_combo_stats(gaps, means, cohen_d_vals):
         "Mean Reg-PL",
         "Overall Gap",
         "Cohen's d (Irr)",
-        "Cohen's d (Reg)",
-        "Gap (Irr SG-PL)", # <-- (NEW)
-        "Gap (Reg SG-PL)"  # <-- (NEW)
+        "Cohen's d (Reg)"
     ]
     
     # Create and print the DataFrame
@@ -297,48 +267,21 @@ def show_combo_stats(gaps, means, cohen_d_vals):
     # Format the DataFrame for printing
     print(df_stats.to_string(float_format="%.3f"))  # float_format="%.3f" says the values of the df should be printed with 3 decimals
     
-    print("-" * 60) # printing a separator
+    print("-" * 60) # printing a separator 
 
 
-def score_combo(packs_subset): # this function returns the values used to rank the combinations, allowing us to choose later which method to use. 
+def score_combo(packs_subset): # this function return the values used to rank the combinations, allowing us to choose later wich method to use. 
   
-    df = build_combo_df(packs_subset) # building a combination of packs.
+    df = build_combo_df(packs_subset) # bulding a combination of packs.
     
     means_df = df.groupby('group').mean().reindex(group_keys) # creating a dataframe just with the means.
     
-    # Original metrics (unchanged)
-    max_dif_singular_plural, max_mean_dif_all_groups, sum_mean_dif_all_groups, diff_all_groups, d_irr, d_reg = calculate_mean_difs(means_df)
+    max_dif_singular_plural, max_mean_dif_all_groups, sum_mean_dif_all_groups, _ = calculate_mean_difs(means_df) # change the order here, in order to prioritize diff
     
-    # Cohen's d metrics (unchanged)
-    cohens_d_irregular, cohens_d_regular, max_cohens_d, sum_cohens_d = calculate_cohens_d(df)
+    # 4. Calculate the Cohen's d values for reporting
+    _, _, max_cohens_d, sum_cohens_d = calculate_cohens_d(df)
 
-    # --- New BabyLM-only decision metrics (BabyLM = baby10m + baby100m) ---
-
-    # For singular–plural differences, ignore SUBTLEX (index 0) and only use baby10m, baby100m (indices 1,2)
-    d_irr_babylm = d_irr[1:]  # [baby10m_gap_irr, baby100m_gap_irr]
-    d_reg_babylm = d_reg[1:]  # [baby10m_gap_reg, baby100m_gap_reg]
-    max_dif_singular_plural_babylm = max(d_irr_babylm + d_reg_babylm)
-
-    # For group differences, also ignore SUBTLEX, keep only baby10m and baby100m
-    difference_babylm = diff_all_groups[1:]  # [diff_baby10m, diff_baby100m]
-    max_group_dif_babylm = max(difference_babylm)
-
-    # For Cohen's d, ignore SUBTLEX (index 0)
-    irr_babylm = cohens_d_irregular[1:]  # [d_baby10m_irr, d_baby100m_irr]
-    reg_babylm = cohens_d_regular[1:]    # [d_baby10m_reg, d_baby100m_reg]
-    max_cohens_d_babylm = max(irr_babylm + reg_babylm)
-
-    # Return all metrics in a fixed order; the indices are mapped by sort_key_map below.
-    return (
-        max_dif_singular_plural,        # index 0
-        max_mean_dif_all_groups,        # index 1
-        sum_mean_dif_all_groups,        # index 2
-        max_cohens_d,                   # index 3
-        sum_cohens_d,                   # index 4
-        max_dif_singular_plural_babylm, # index 5 (BabyLM-only)
-        max_group_dif_babylm,           # index 6 (BabyLM-only)
-        max_cohens_d_babylm             # index 7 (BabyLM-only)
-    )
+    return max_dif_singular_plural, max_mean_dif_all_groups, sum_mean_dif_all_groups, max_cohens_d, sum_cohens_d
 
 
 
@@ -368,7 +311,7 @@ num_other_to_choose = num_stimuli - len(irr_packs_indexation) # This line calcul
                                                               # It takes num_stimuli and subtracts the number of mandatory groups.
 
 base_set_iter = itertools.product(*[g[1] for g in irr_packs_indexation]) # creates an iterator that will generate every possible  combination of the mandatory packs.
-# itertools.product does the cartesian product (all combinations with one element of each of 2 groups). Check google for more details. 
+# itertools.product does the cartesian product (all combinations with one element of ach of 2 groups). Chck google for more details. 
 
 other_set_iter = list(itertools.combinations(other_indices, num_other_to_choose)) # creates another iterator that will generate every possible combination of the non mandatory packs.
 
@@ -377,7 +320,7 @@ result_list = []
 
 for base_ids, other_ids in itertools.product(base_set_iter, other_set_iter): # main loop. It takes the two previous iterators and pairs every combination of one with every combination of the other. 
     ids = base_ids + other_ids # creates the final, complete combination of 14 pack indices.
-    # the use of iterators instead of lists here, makes it more memory efficient. 
+# the use of iterators instead of lists here, makes it more memory efficient. 
 
     used = set()
     ok = True
@@ -392,44 +335,38 @@ for base_ids, other_ids in itertools.product(base_set_iter, other_set_iter): # m
     # If no repeats, score this combination
     scores = score_combo([packs[i] for i in ids])
     
-    # Append all scores + the pack IDs
+    # Append all 5 scores + the pack IDs
     result_list.append(scores + (ids,))
 
-# Let's map metric names to their indices in the score tuple returned by score_combo.
-sort_key_map = {  ### a dictionary that connects the name of a sorting method to its index in the tuple returned by the score_combo function.
+ # let's get the words inside each 
+
+sort_key_map = { ###a dictionary that connects the name of a sorting method to its index in the tuple returned by the score_combo function.
     'max_dif_singular_plural': 0,
     'max_group_dif': 1,
     'sum_dif_all_groups': 2,
     'max_cohens_d': 3,
-    'sum_cohens_d': 4,
-    'max_dif_singular_plural_babylm': 5,
-    'max_group_dif_babylm': 6,
-    'max_cohens_d_babylm': 7
+    'sum_cohens_d': 4
 }
 
-def combo_sort_key(rec):
-    scores = rec[:-1]
-    return tuple(scores[sort_key_map[name]] for name in decision_order)
+primary_key_index = sort_key_map.get(decision_method, 0) # gets the method chosen at the beggining of the code. 
 
-# Sort the list minimizing each metric in the order specified in decision_order.
-result_list.sort(key=combo_sort_key)
+all_score_indices = list(range(5)) # organizes the methods. leaving the excluded ones for the 
+all_score_indices.pop(primary_key_index)
+sort_key = lambda x: (x[primary_key_index],) + tuple(x[i] for i in all_score_indices)
 
-for rank, rec in enumerate(result_list[:num_answers], 1):
+result_list.sort(key=sort_key) # selects the best combinations
+
+for rec in result_list[:num_answers]:
     
-    # Unpack ids (always last element of the tuple)
-    ids = rec[-1]
+    # Unpack the 5 scores and the ids
+    ids = rec[5] # The 'ids' tuple is the 6th item (index 5)
     
-    # Print the rank.
-    print(f"Rank {rank}")
-    print()
-    
-    # Calculate stats for printing ---
+    # Re-calculate stats for printing ---
     packs_subset = [packs[i] for i in ids]
     df = build_combo_df(packs_subset)
     means_df = df.groupby('group').mean().reindex(group_keys)
     
-    # We only use the overall gaps (difference_all_groups) here.
-    _, _, _, gaps, _, _ = calculate_mean_difs(means_df)
+    _, _, _, gaps = calculate_mean_difs(means_df)
     cohens_d_irregular, cohens_d_regular, _, _ = calculate_cohens_d(df)
     means_list = means_df.values.tolist()
     cohen_d_vals = (cohens_d_irregular, cohens_d_regular)
@@ -439,3 +376,4 @@ for rank, rec in enumerate(result_list[:num_answers], 1):
     print()
     
     show_combo_stats(gaps, means_list, cohen_d_vals)
+
