@@ -2,7 +2,6 @@
 # It searches for 16 forms of the compound if it is regular. It searches for possessives too.
 ### Insert combinations in compound_definitions.
 
-
 import os
 import re
 from collections import Counter

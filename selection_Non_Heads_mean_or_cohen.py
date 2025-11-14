@@ -251,8 +251,8 @@ def show_combo_stats(gaps, means, cohen_d_vals):
             gaps[0],
             cohens_d_irregular[0],
             cohens_d_regular[0],
-            gap_irr[0],    # <-- (NEW)
-            gap_reg[0]     # <-- (NEW)
+            gap_irr[0],    
+            gap_reg[0]     
         ],
         "baby10m": [
             means[0][1],
@@ -262,8 +262,8 @@ def show_combo_stats(gaps, means, cohen_d_vals):
             gaps[1],
             cohens_d_irregular[1],
             cohens_d_regular[1],
-            gap_irr[1],    # <-- (NEW)
-            gap_reg[1]     # <-- (NEW)
+            gap_irr[1],    
+            gap_reg[1]     
         ],
         "baby100m": [
             means[0][2],
@@ -273,8 +273,8 @@ def show_combo_stats(gaps, means, cohen_d_vals):
             gaps[2],
             cohens_d_irregular[2],
             cohens_d_regular[2],
-            gap_irr[2],    # <-- (NEW)
-            gap_reg[2]     # <-- (NEW)
+            gap_irr[2],    
+            gap_reg[2]    
         ]
     }
     
@@ -287,8 +287,8 @@ def show_combo_stats(gaps, means, cohen_d_vals):
         "Overall Gap",
         "Cohen's d (Irr)",
         "Cohen's d (Reg)",
-        "Gap (Irr SG-PL)", # <-- (NEW)
-        "Gap (Reg SG-PL)"  # <-- (NEW)
+        "Gap (Irr SG-PL)",
+        "Gap (Reg SG-PL)"
     ]
     
     # Create and print the DataFrame
