@@ -53,8 +53,15 @@ def get_all_phrases():
     p = inflect.engine() # to transform plurals into singulars and vice versa
 
     compound_groups = [
-        (['rat', 'rats'], ['eater']),
-        (['that'], ['comp'])
+        #(['man', 'men', 'boy', 'boys'], ['hangout']),
+        (['woman', 'women', 'girl', 'girls'], ['protector', 'register', 'hangout', 'brigade']),
+        (['salesman', 'salesmen', 'retailer', 'retailers'], ['committee']),
+        (['nobleman', 'noblemen', 'aristocrat', 'aristocrats'], ['hangout']),
+        (['boatman', 'boatmen', 'shipmate', 'shipmates'], ['brigade']),
+        (['craftsman', 'craftsmen', 'labourer', 'labourers'], ['hangout'])
+
+
+
         # Add your other groups here.
         # First list is for Non-Heads and second list is for Heads. 
         # e.g.: (['mouse', 'mice', 'rat', 'rats'], ['eater', 'trader']).

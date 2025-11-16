@@ -36,63 +36,63 @@ def get_all_phrases():
     p = inflect.engine() # to transform plurals into singulars and vice versa
 
     compound_groups = [
-        (
-            ['goose', 'geese', 'swan', 'swans'],
-            ['area', 'trader', 'tracker', 'expert']
-        ),
-        (
-            ['ox', 'oxen', 'cow', 'cows'],
-            ['register', 'trader', 'tracker', 'area']
-        ),
-        (
-            ['louse', 'lice', 'flea', 'fleas'],
-            ['issue', 'trader', 'tracker', 'expert']
-        ),
-        (
-            ['mouse', 'mice', 'rat', 'rats'],
-            ['issue', 'trader', 'tracker', 'protector']
-        ),
-        (
-            ['foot', 'feet', 'leg', 'legs'],
-            ['issue', 'examination', 'expert', 'protector']
-        ),
-        (
-            ['tooth', 'teeth', 'bone', 'bones'],
-            ['issue', 'examination', 'expert', 'protector']
-        ),
-        (
-            ['child', 'children', 'adult', 'adults'],
-            ['patrol', 'register', 'committee', 'brigade']
-        ),
-        (
-            ['woman', 'women', 'girl', 'girls'],
-            ['area', 'register', 'committee', 'brigade']
-        ),
-        (
-            ['man', 'men', 'boy', 'boys'],
-            ['committee', 'examination', 'area', 'patrol']
-        ),
-        (
-            ['salesman', 'salesmen', 'vendor', 'vendors'],
-            ['association', 'inspector', 'protector', 'employer']
-        ),
-        (
-            ['nobleman', 'noblemen', 'aristocrat', 'aristocrats'],
-            ['patrol', 'association', 'committee', 'brigade']
-        ),
-        (
-            ['boatman', 'boatmen', 'shipmate', 'shipmates'],
-            ['association', 'patrol', 'inspector', 'employer']
-        ),
-        (
-            ['craftsman', 'craftsmen', 'labourer', 'labourers'],
-            ['employer', 'inspector', 'examination', 'association']
-        ),
-        (
-            ['fireman', 'firemen', 'lifeguard', 'lifeguards'],
-            ['register', 'employer', 'brigade', 'inspector']
-        )
-    ]
+    (
+        ['goose', 'geese', 'swan', 'swans'],
+        ['protector', 'trader', 'tracker', 'expert']
+    ),
+    (
+        ['ox', 'oxen', 'cow', 'cows'],
+        ['register', 'trader', 'tracker', 'finder']
+    ),
+    (
+        ['louse', 'lice', 'flea', 'fleas'],
+        ['issue', 'trader', 'tracker', 'expert']
+    ),
+    (
+        ['mouse', 'mice', 'rat', 'rats'],
+        ['issue', 'trader', 'tracker', 'inspector']
+    ),
+    (
+        ['foot', 'feet', 'leg', 'legs'],
+        ['issue', 'examination', 'expert', 'inspector']
+    ),
+    (
+        ['tooth', 'teeth', 'bone', 'bones'],
+        ['issue', 'examination', 'expert', 'protector']
+    ),
+    (
+        ['child', 'children', 'adult', 'adults'],
+        ['patrol', 'register', 'committee', 'brigade']
+    ),
+    (
+        ['woman', 'women', 'girl', 'girls'],
+        ['protector', 'register', 'hangout', 'brigade']
+    ),
+    (
+        ['man', 'men', 'boy', 'boys'],
+        ['committee', 'register', 'finder', 'hangout']
+    ),
+    (
+        ['salesman', 'salesmen', 'retailer', 'retailers'],
+        ['committee', 'inspector', 'protector', 'employer']
+    ),
+    (
+        ['nobleman', 'noblemen', 'aristocrat', 'aristocrats'],
+        ['patrol', 'hangout', 'committee', 'brigade']
+    ),
+    (
+        ['boatman', 'boatmen', 'shipmate', 'shipmates'],
+        ['brigade', 'finder', 'inspector', 'employer']
+    ),
+    (
+        ['craftsman', 'craftsmen', 'labourer', 'labourers'],
+        ['employer', 'examination', 'hangout', 'finder']
+    ),
+    (
+        ['fireman', 'firemen', 'lifeguard', 'lifeguards'],
+        ['examination', 'employer', 'brigade', 'patrol']
+    )
+]
     
     singular_phrases = []
     plural_phrases = []
