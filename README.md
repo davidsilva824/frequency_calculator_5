@@ -1,6 +1,6 @@
 This testing pipeline is part of the masters dissertation: "Exploring Grammatical Constraints with Large Language Models" by David Silva, supervised by João Veríssimo and Vânia Mendonça.
 
-It obtains Zipf values
+It calculates Zipf values for subtlex-UK, and two datasets from the babyLM challenge 2024: https://aclanthology.org/events/babylm-2024/
 
 Install all requested packages. Run the 'zipf_list_of_words.py' once in order to download the datasets. 
 
