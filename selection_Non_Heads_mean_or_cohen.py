@@ -7,8 +7,8 @@ from zipf_stats import Zipf_stats
 
 print()
 
-num_answers = 20 # number of combinations it should provide.
-num_stimuli = 14 # number of stimuli Non_Heads we want to select. 
+num_answers = 10 # number of combinations it should provide.
+num_stimuli = 12 # number of stimuli Non_Heads we want to select. 
 
 # Full decision order (from highest priority to lowest).
 # You can reorder or remove/add items here to change tie-breaking logic.

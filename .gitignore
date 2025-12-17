@@ -1,3 +1,4 @@
+bnc_corpus.txt
 concatenated_train_10M.csv
 concatenated_train_100M.csv
 
@@ -6,4 +7,5 @@ train_100M/
 
 zipf_list_of_words_result.csv
 
-__pycache__/
+
+BNC_XML

@@ -1,4 +1,5 @@
 # Version 3.0
+# It searches for compounds in the Subtlex-UK and babyLM datasets. 
 # It searches for 16 forms of the compound if it is regular. It searches for possessives too.
 
 ### e.g. rat/rats eater
@@ -54,14 +55,7 @@ def get_all_phrases():
 
     compound_groups = [
         #(['man', 'men', 'boy', 'boys'], ['hangout']),
-        (['woman', 'women', 'girl', 'girls'], ['protector', 'register', 'hangout', 'brigade']),
-        (['salesman', 'salesmen', 'retailer', 'retailers'], ['committee']),
-        (['nobleman', 'noblemen', 'aristocrat', 'aristocrats'], ['hangout']),
-        (['boatman', 'boatmen', 'shipmate', 'shipmates'], ['brigade']),
-        (['craftsman', 'craftsmen', 'labourer', 'labourers'], ['hangout'])
-
-
-
+        (['sex', 'sexes','gender', 'genders'], ['disparities',]),
         # Add your other groups here.
         # First list is for Non-Heads and second list is for Heads. 
         # e.g.: (['mouse', 'mice', 'rat', 'rats'], ['eater', 'trader']).

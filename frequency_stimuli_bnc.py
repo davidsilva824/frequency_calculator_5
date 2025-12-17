@@ -1,26 +1,34 @@
 # Version 3.0
-# It searches for 16 forms of the compound if it is regular, including possessive forms.
+# It searches for compounds in British National Corpus. 
+# It searches for 16 forms of the compound if it is regular. It searches for possessives too.
 
+### e.g. rat/rats eater
+# rat eater, rat-eater, rateater
+# rat eaters, rat-eaters, rateaters
+# rat's eater, rat's eaters, 
+# rats eater, rats-eater, ratseater
+# rats eaters, rats-eaters, ratseaters
+# rats' eater, rats' eaters
+
+
+### e.g. mouse/mice eater
+# mouse eater, mouse-eater, mouseeater
+# mouse eaters, mouse-eaters, mouseeaters
+# mouse's eater, mouse's eaters,
+# mice eater, mice-eater, miceeater
+# mice eaters, mice-eaters, miceeaters
+# mice's eater, mice's eaters
+
+### Insert combinations in compound_groups.
 
 import os
 import re
 from collections import Counter
-import inflect  
-from zipf_calculator_babyLM import Zipf_calculator_babyLM
-
-# this part is just to download he BabyLM datasets and create the concatenate_train files.
-#  in case they are not already in the working folder. 
-print("Checking for corpus files...")  
-corpus_setup = Zipf_calculator_babyLM()
-print("Corpus files are ready.")
-#----------------------------------------------
-
-### Insert combinations in compound_groups.
+import inflect
 
 
 CORPUS_FILENAMES = [
-    "concatenated_train_10M.csv",
-    "concatenated_train_100M.csv"
+    "bnc_corpus.txt"
 ]
 
 def make_possessive(word):
@@ -78,6 +86,8 @@ def get_all_phrases():
     (['fireman', 'firemen', 'lifeguard', 'lifeguards'],
     ['examination', 'employer', 'crew', 'patrol'])
 ]
+
+
     
     singular_phrases = []
     plural_phrases = []
