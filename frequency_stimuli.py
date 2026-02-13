@@ -55,7 +55,7 @@ def get_all_phrases():
 
     compound_groups = [
         #(['man', 'men', 'boy', 'boys'], ['hangout']),
-        (['tax'], ['reimbursement',]),
+        (['play','plays', 'blaze','blazes'], ['lover',]),
         # Add your other groups here.
         # First list is for Non-Heads and second list is for Heads. 
         # e.g.: (['mouse', 'mice', 'rat', 'rats'], ['eater', 'trader']).
